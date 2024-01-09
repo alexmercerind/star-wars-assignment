@@ -7,7 +7,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 class StarWarsService {
     companion object {
-        private const val BASE_URL = "https://swapi.dev/api"
+        private const val BASE_URL = "https://swapi.dev/api/"
 
         private val retrofit by lazy {
             val interceptor = HttpLoggingInterceptor()
