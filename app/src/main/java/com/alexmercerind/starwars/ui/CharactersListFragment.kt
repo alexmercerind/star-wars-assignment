@@ -1,21 +1,19 @@
 package com.alexmercerind.starwars.ui
 
-import android.graphics.drawable.GradientDrawable.Orientation
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.GridView
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
-import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.paging.LoadState
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.alexmercerind.starwars.databinding.FragmentCharactersListBinding
 import com.alexmercerind.starwars.ui.adapter.CharacterAdapter
+import com.alexmercerind.starwars.ui.adapter.GenericLoadStateAdapter
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
@@ -34,7 +32,7 @@ class CharactersListFragment : Fragment() {
 
         val items = charactersListViewModel.items
         val characterAdapter = CharacterAdapter()
-
+        val genericLoadStateAdapter = GenericLoadStateAdapter(characterAdapter::retry)
         viewLifecycleOwner.lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 items.collectLatest {
@@ -42,9 +40,31 @@ class CharactersListFragment : Fragment() {
                 }
             }
         }
+        viewLifecycleOwner.lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                characterAdapter.loadStateFlow.collectLatest {
+                    if (characterAdapter.itemCount > 0) {
+                        binding.circularProgressIndicator.visibility = View.GONE
+                    }
+                }
+            }
+        }
 
-        binding.charactersRecyclerView.adapter = characterAdapter
-        binding.charactersRecyclerView.layoutManager = GridLayoutManager(requireContext(), 2)
+        binding.charactersRecyclerView.layoutManager =
+            GridLayoutManager(requireContext(), 2).apply {
+                spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
+                    override fun getSpanSize(position: Int): Int {
+                        return if (position == characterAdapter.itemCount && genericLoadStateAdapter.itemCount > 0) {
+                            2
+                        } else {
+                            1
+                        }
+                    }
+                }
+            }
+        binding.charactersRecyclerView.adapter = characterAdapter.withLoadStateFooter(
+            footer = genericLoadStateAdapter
+        )
 
         return binding.root
     }

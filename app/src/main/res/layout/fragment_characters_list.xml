@@ -15,7 +15,7 @@
         <com.google.android.material.appbar.MaterialToolbar
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:minWidth="?attr/actionBarSize"
+            android:minHeight="?attr/actionBarSize"
             app:title="@string/app_name"
             app:titleCentered="true" />
     </com.google.android.material.appbar.AppBarLayout>
@@ -27,4 +27,12 @@
         android:clipToPadding="false"
         android:padding="4dp"
         app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior" />
+
+    <com.google.android.material.progressindicator.CircularProgressIndicator
+        android:id="@+id/circularProgressIndicator"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:layout_marginTop="?attr/actionBarSize"
+        android:indeterminate="true" />
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

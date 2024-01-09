@@ -3,5 +3,5 @@
     <string name="character_height">Height: %1$s</string>
     <string name="character_mass">Mass: %1$s</string>
     <string name="character_gender">Gender: %1$s</string>
-
+    <string name="retry">Retry</string>
 </resources>
