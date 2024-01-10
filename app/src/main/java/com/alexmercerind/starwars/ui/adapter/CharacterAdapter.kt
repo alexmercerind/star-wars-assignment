@@ -1,27 +1,35 @@
 package com.alexmercerind.starwars.ui.adapter
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.alexmercerind.starwars.R
-import com.alexmercerind.starwars.api.StarWarsService
 import com.alexmercerind.starwars.databinding.LayoutCharacterBinding
 import com.alexmercerind.starwars.model.Character
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
+import com.alexmercerind.starwars.ui.CharactersListFragmentDirections
+import com.alexmercerind.starwars.ui.MainActivityViewModel
+import com.alexmercerind.starwars.utils.Constants
 
-class CharacterAdapter :
+class CharacterAdapter(private val mainActivityViewModel: MainActivityViewModel) :
     PagingDataAdapter<Character, CharacterAdapter.ViewHolder>(CharacterDiffCallback) {
-    inner class ViewHolder(val binding: LayoutCharacterBinding) : RecyclerView.ViewHolder(binding.root)
+    inner class ViewHolder(val binding: LayoutCharacterBinding) :
+        RecyclerView.ViewHolder(binding.root)
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.binding.root.setOnClickListener {
-            GlobalScope.launch {
-                StarWarsService.api.getFilm(1)
-            }
+        holder.binding.materialCardView.setOnClickListener {
+            Log.d(Constants.LOG_TAG, "!!!")
+
+            mainActivityViewModel.navController?.navigate(
+                CharactersListFragmentDirections.actionCharactersListFragmentToFilmsListFragment(
+                    getItem(position)!!.name,
+                    getItem(position)!!.films.toTypedArray(),
+                )
+            )
         }
+
         holder.binding.apply {
             nameTextView.text = getItem(position)?.name
             heightTextView.text = root.context.getString(R.string.character_height, getItem(position)?.height)

@@ -9,5 +9,21 @@
         android:id="@+id/charactersListFragment"
         android:name="com.alexmercerind.starwars.ui.CharactersListFragment"
         android:label="fragment_characters_list"
-        tools:layout="@layout/fragment_characters_list" />
+        tools:layout="@layout/fragment_characters_list" >
+        <action
+            android:id="@+id/action_charactersListFragment_to_filmsListFragment"
+            app:destination="@id/filmsListFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/filmsListFragment"
+        android:name="com.alexmercerind.starwars.ui.FilmsListFragment"
+        android:label="fragment_films_list"
+        tools:layout="@layout/fragment_films_list" >
+        <argument
+            android:name="character"
+            app:argType="string" />
+        <argument
+            android:name="filmURLs"
+            app:argType="string[]" />
+    </fragment>
 </navigation>
