@@ -1,6 +1,5 @@
 package com.alexmercerind.starwars.api.dto
 
-
 import com.google.gson.annotations.SerializedName
 import androidx.annotation.Keep
 import java.io.Serializable

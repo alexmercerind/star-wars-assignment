@@ -44,7 +44,16 @@ class CharactersListFragment : Fragment() {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 characterAdapter.loadStateFlow.collectLatest {
                     if (characterAdapter.itemCount > 0) {
+                        binding.retryMaterialButton.visibility = View.GONE
                         binding.circularProgressIndicator.visibility = View.GONE
+                    }
+                    if (characterAdapter.itemCount == 0 && it.refresh is LoadState.Error) {
+                        binding.retryMaterialButton.visibility = View.VISIBLE
+                        binding.circularProgressIndicator.visibility = View.GONE
+                    }
+                    if (characterAdapter.itemCount == 0 && it.refresh is LoadState.Loading) {
+                        binding.retryMaterialButton.visibility = View.GONE
+                        binding.circularProgressIndicator.visibility = View.VISIBLE
                     }
                 }
             }
@@ -65,6 +74,10 @@ class CharactersListFragment : Fragment() {
         binding.charactersRecyclerView.adapter = characterAdapter.withLoadStateFooter(
             footer = genericLoadStateAdapter
         )
+
+        binding.retryMaterialButton.setOnClickListener {
+            characterAdapter.refresh()
+        }
 
         return binding.root
     }

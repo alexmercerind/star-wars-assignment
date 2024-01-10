@@ -23,6 +23,8 @@ class StarWarsRepository() {
             return Result.Error(e)
         } catch (e: IOError) {
             return Result.Error(e)
+        } catch (e: Throwable) {
+            return Result.Error(e)
         }
     }
 }

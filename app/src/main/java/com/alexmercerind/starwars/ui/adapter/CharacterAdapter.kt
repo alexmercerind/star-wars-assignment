@@ -19,6 +19,8 @@ class CharacterAdapter :
             heightTextView.text = root.context.getString(R.string.character_height, getItem(position)?.height)
             massTextView.text = root.context.getString(R.string.character_mass, getItem(position)?.mass)
             genderTextView.text = root.context.getString(R.string.character_gender, getItem(position)?.gender)
+            createdTextView.text = root.context.getString(R.string.character_created, getItem(position)?.created)
+            updatedTextView.text = root.context.getString(R.string.character_updated, getItem(position)?.edited)
         }
     }
 
