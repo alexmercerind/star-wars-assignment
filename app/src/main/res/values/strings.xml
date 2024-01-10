@@ -7,4 +7,10 @@
     <string name="character_updated">Updated:\n%1$s</string>
     <string name="retry">Retry</string>
     <string name="character_films">%1$s: Films</string>
+    <string name="filter">Filter</string>
+    <string name="name">Name</string>
+    <string name="female">female</string>
+    <string name="male">Male</string>
+    <string name="apply">Apply</string>
+    <string name="others">Others</string>
 </resources>

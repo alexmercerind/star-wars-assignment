@@ -1,5 +1,6 @@
 package com.alexmercerind.starwars.ui
 
+import FilterBottomSheet
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -12,6 +13,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.paging.LoadState
 import androidx.recyclerview.widget.GridLayoutManager
+import com.alexmercerind.starwars.R
 import com.alexmercerind.starwars.databinding.FragmentCharactersListBinding
 import com.alexmercerind.starwars.ui.adapter.CharacterAdapter
 import com.alexmercerind.starwars.ui.adapter.GenericLoadStateAdapter
@@ -78,6 +80,16 @@ class CharactersListFragment : Fragment() {
 
         binding.retryMaterialButton.setOnClickListener {
             characterAdapter.refresh()
+        }
+
+
+        binding.materialToolbar.setOnMenuItemClickListener {
+            if (it.itemId == R.id.filter) {
+                FilterBottomSheet(charactersListViewModel, characterAdapter).show(
+                    requireActivity().supportFragmentManager, FilterBottomSheet.TAG
+                )
+            }
+            true
         }
 
         return binding.root

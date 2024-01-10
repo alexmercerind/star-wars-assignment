@@ -14,14 +14,21 @@ import kotlinx.coroutines.flow.Flow
 
 class CharactersListViewModel(application: Application) : AndroidViewModel(application) {
 
-    private val repository: StarWarsRepository = StarWarsRepository(application)
+    val repository: StarWarsRepository = StarWarsRepository(application)
 
     companion object {
         private const val PAGE_SIZE = 8
     }
 
+    var pagingSource = CharactersPageSource(repository)
+        private set
+
+    fun resetPagingSource() {
+        pagingSource = CharactersPageSource(repository)
+    }
+
     val items: Flow<PagingData<Character>> = Pager(
         config = PagingConfig(pageSize = PAGE_SIZE, enablePlaceholders = false),
-        pagingSourceFactory = { CharactersPageSource(repository) }
+        pagingSourceFactory = { pagingSource }
     ).flow.cachedIn(viewModelScope)
 }
