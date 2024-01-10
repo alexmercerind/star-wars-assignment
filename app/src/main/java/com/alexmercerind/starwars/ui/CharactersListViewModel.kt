@@ -1,6 +1,7 @@
 package com.alexmercerind.starwars.ui
 
-import androidx.lifecycle.ViewModel
+import android.app.Application
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
@@ -11,8 +12,10 @@ import com.alexmercerind.starwars.paging.CharactersPageSource
 import com.alexmercerind.starwars.repository.StarWarsRepository
 import kotlinx.coroutines.flow.Flow
 
-class CharactersListViewModel(private val repository: StarWarsRepository = StarWarsRepository()) :
-    ViewModel() {
+class CharactersListViewModel(application: Application) : AndroidViewModel(application) {
+
+    private val repository: StarWarsRepository = StarWarsRepository(application)
+
     companion object {
         private const val PAGE_SIZE = 8
     }

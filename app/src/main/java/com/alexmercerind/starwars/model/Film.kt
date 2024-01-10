@@ -19,6 +19,7 @@ data class Film(
     @SerializedName("starships") val starships: List<String>,
     @SerializedName("title") val title: String,
     @SerializedName("url") val url: String,
-    @SerializedName("vehicles") val vehicles: List<String>
+    @SerializedName("vehicles") val vehicles: List<String>,
+    // ID
+    @SerializedName("page") val id: Int
 ) : Serializable
-

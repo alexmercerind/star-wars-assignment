@@ -22,6 +22,6 @@ data class Character(
     @SerializedName("starships") val starships: List<String>,
     @SerializedName("url") val url: String,
     @SerializedName("vehicles") val vehicles: List<String>,
-    // Page on which this character was received.
+    // PAGE
     @SerializedName("page") val page: Int
 ) : Serializable

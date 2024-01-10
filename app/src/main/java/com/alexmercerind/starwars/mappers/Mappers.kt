@@ -39,5 +39,6 @@ fun FilmDTO.toFilm() = Film(
     starships,
     title,
     url,
-    vehicles
+    vehicles,
+    url.split("/").mapNotNull { it.toIntOrNull() }.last()
 )
