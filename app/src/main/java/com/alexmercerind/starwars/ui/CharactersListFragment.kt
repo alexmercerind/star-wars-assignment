@@ -17,9 +17,11 @@ import com.alexmercerind.starwars.R
 import com.alexmercerind.starwars.databinding.FragmentCharactersListBinding
 import com.alexmercerind.starwars.ui.adapter.CharacterAdapter
 import com.alexmercerind.starwars.ui.adapter.GenericLoadStateAdapter
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
+@AndroidEntryPoint
 class CharactersListFragment : Fragment() {
     // NOTE: Shared view model i.e. view model store owner is activity.
     private val mainActivityViewModel: MainActivityViewModel by activityViewModels()
@@ -79,6 +81,7 @@ class CharactersListFragment : Fragment() {
         )
 
         binding.retryMaterialButton.setOnClickListener {
+            charactersListViewModel.resetPagingSource()
             characterAdapter.refresh()
         }
 

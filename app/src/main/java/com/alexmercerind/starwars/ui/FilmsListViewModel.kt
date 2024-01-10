@@ -11,11 +11,14 @@ import androidx.paging.cachedIn
 import com.alexmercerind.starwars.model.Film
 import com.alexmercerind.starwars.paging.FilmsPageSource
 import com.alexmercerind.starwars.repository.StarWarsRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
+import javax.inject.Inject
 
-class FilmsListViewModel(application: Application) : AndroidViewModel(application) {
-    private val repository: StarWarsRepository = StarWarsRepository(application)
-
+@HiltViewModel
+class FilmsListViewModel @Inject constructor(
+    private val repository: StarWarsRepository
+) : ViewModel() {
     companion object {
         private const val PAGE_SIZE = 1
     }

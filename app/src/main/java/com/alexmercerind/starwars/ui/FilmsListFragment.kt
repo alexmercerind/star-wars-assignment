@@ -16,9 +16,11 @@ import com.alexmercerind.starwars.R
 import com.alexmercerind.starwars.databinding.FragmentFilmsListBinding
 import com.alexmercerind.starwars.ui.adapter.FilmAdapter
 import com.alexmercerind.starwars.ui.adapter.GenericLoadStateAdapter
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
+@AndroidEntryPoint
 class FilmsListFragment : Fragment() {
     private val args: FilmsListFragmentArgs by navArgs()
 

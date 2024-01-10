@@ -1,7 +1,7 @@
 package com.alexmercerind.starwars.repository
 
 import android.app.Application
-import com.alexmercerind.starwars.api.StarWarsService
+import com.alexmercerind.starwars.api.StarWarsAPI
 import com.alexmercerind.starwars.db.StarWarsDatabase
 import com.alexmercerind.starwars.mappers.toCharacter
 import com.alexmercerind.starwars.mappers.toFilm
@@ -10,9 +10,12 @@ import com.alexmercerind.starwars.model.Film
 import com.alexmercerind.starwars.utils.Result
 import retrofit2.HttpException
 import java.io.IOError
+import javax.inject.Inject
 
-class StarWarsRepository(application: Application) {
-    private val database = StarWarsDatabase(application)
+class StarWarsRepository @Inject constructor(
+    private val api: StarWarsAPI,
+    private val database: StarWarsDatabase
+) {
 
     suspend fun getCharacters(page: Int): Result<List<Character>> {
         try {
@@ -25,7 +28,7 @@ class StarWarsRepository(application: Application) {
             }
 
             // Fresh request.
-            val response = StarWarsService.api.getCharacterPage(page)
+            val response = api.getCharacterPage(page)
             val values = response.results.map { it.toCharacter(page) }
             // Insert into cache.
             database.characterDao().insert(values)
@@ -58,7 +61,7 @@ class StarWarsRepository(application: Application) {
             }
 
             // Fresh request.
-            val response = StarWarsService.api.getFilm(id)
+            val response = api.getFilm(id)
             val value = response.toFilm()
             // Insert into cache.
             database.filmDao().insert(value)
