@@ -6,14 +6,22 @@ import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.alexmercerind.starwars.R
+import com.alexmercerind.starwars.api.StarWarsService
 import com.alexmercerind.starwars.databinding.LayoutCharacterBinding
 import com.alexmercerind.starwars.model.Character
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 class CharacterAdapter :
     PagingDataAdapter<Character, CharacterAdapter.ViewHolder>(CharacterDiffCallback) {
     inner class ViewHolder(val binding: LayoutCharacterBinding) : RecyclerView.ViewHolder(binding.root)
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        holder.binding.root.setOnClickListener {
+            GlobalScope.launch {
+                StarWarsService.api.getFilm(1)
+            }
+        }
         holder.binding.apply {
             nameTextView.text = getItem(position)?.name
             heightTextView.text = root.context.getString(R.string.character_height, getItem(position)?.height)

@@ -1,11 +1,11 @@
-package com.alexmercerind.starwars.api.dto
+package com.alexmercerind.starwars.model
 
+import androidx.room.Entity
 import com.google.gson.annotations.SerializedName
-import androidx.annotation.Keep
 import java.io.Serializable
 
-@Keep
-data class FilmDTO(
+@Entity(tableName = "Film", primaryKeys = ["url"])
+data class Film(
     @SerializedName("characters") val characters: List<String>,
     @SerializedName("created") val created: String,
     @SerializedName("director") val director: String,
@@ -20,5 +20,5 @@ data class FilmDTO(
     @SerializedName("title") val title: String,
     @SerializedName("url") val url: String,
     @SerializedName("vehicles") val vehicles: List<String>
-): Serializable
+) : Serializable
 
