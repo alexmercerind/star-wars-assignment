@@ -35,6 +35,7 @@ https://github.com/alexmercerind/star-wars-assignment/assets/28951144/096b83f8-d
 - Offline support w/ Room
 - Single activity & multiple fragment architecture w/ Navigation Component & safe-args
 - Dependency injection using Dagger Hilt
+- Material Design 3
 
 ## Architecture
 
